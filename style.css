@@ -4,6 +4,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: "Ubuntu Mono", monospace;
+    overflow: hidden;
 }
 .loading-text {
     display: flex;
@@ -12,4 +13,35 @@ body {
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-end;
+}
+.middle-logo {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  font-size: 7rem;
+  font-family: "Kanit", sans-serif;
+}
+.middle-logo .main-span {
+  cursor: text;
+  padding: 0.5rem 3rem;
+  border-bottom: 1px solid white;
+}
+
+
+.glitch::before {
+  content: attr(data-text);
+  position: absolute;
+  clip-path: inset(0 0 50% 0);
+  color: white;
+  transform: translate(-2px, -1px);
+}
+
+
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  clip-path: inset(50% 0 0 0);
+  color: #8a8a8a;
+  transform: translate(1px, 1px);
 }

@@ -1,5 +1,3 @@
-let loadingText = document.querySelector(".loading-text");
-
 const randomText = [
   "Initializing system firmware...",
   "Probing PCI devices...",
@@ -70,19 +68,55 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function startLoadingText(){
+let loadingText = document.querySelector(".loading-text");
+let middleLogo = document.querySelector(".middle-logo");
+let middleLogoSpan = document.querySelector(".middle-logo .main-span");
+
+async function start(){
+  // fake boot messages
+    document.body.style.cursor = "progress";
     let progressTime = 0
     for(let i = 0; i < randomText.length; i++){
         let newText = document.createElement("span");
         newText.innerText = randomText[i];
         loadingText.appendChild(newText);
-        let rand = Math.floor(Math.random() * (100 - 1) + 1) > 50 ? 300 : 10;
+        let rand = Math.floor(Math.random() * (100 - 1) + 1) > 70 ? 300 : 10;
         progressTime += rand;
         await sleep(rand);
     }
     let newText = document.createElement("span");
     newText.innerText = `systemd[1]: Startup finished in ${progressTime/1000}s.`
     loadingText.appendChild(newText);
+
+    await sleep(1000);
+    loadingText.style.display = "none";
+
+    // show logo
+    document.body.style.cursor = "default";
+    middleLogo.style.display = "flex";
+    await sleep(500);
+    middleLogoSpan.style.backgroundColor = "white";
+    middleLogoSpan.style.border = "1px solid white"
+    await sleep(500);
+    middleLogoSpan.style.backgroundColor = "black";
+    await sleep(500);
+    middleLogoSpan.style.border = "none";
+    await sleep(100);
+    middleLogo.classList.add("glitch");
+    await sleep(500);
+    for(let i = 0; i < 5; i++){
+      if(!middleLogo.classList.contains("glitch")){
+        middleLogo.classList.add("glitch");
+      } else {
+        middleLogo.classList.remove("glitch"); 
+      }
+      await sleep(100);
+    }
+    await sleep(500);
+    middleLogoSpan.style.border = "1px solid white";
+    await sleep(500);
+    middleLogo.style.display = "none"
 }
 
-startLoadingText();
+start();
+
