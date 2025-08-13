@@ -128,7 +128,7 @@ async function start(){
     }
     let currentHeight = getNumFromString(getComputedStyle(middleLogoSpan).height);
     middleLogoSpan.style.height = getComputedStyle(middleLogoSpan).height;
-    while (currentHeight < 650){
+    while (currentHeight < 610){
       currentHeight += 1;
       middleLogoSpan.style.height = currentHeight + "px";
       await sleep(1);
@@ -139,7 +139,6 @@ async function start(){
     while (currentTop > 0){
       currentTop--;
       middleLogoSpan.style.top = currentTop + "px";
-      console.log(currentTop)
       await sleep(10);
     }
     middleLogo.style.display = "none";
@@ -157,6 +156,83 @@ function getNumFromString(str){
   }
   return parseInt(num);
 }
+
+let hours = document.getElementById("hours");
+let minutes = document.getElementById("minutes");
+let seconds = document.getElementById("seconds");
+let year = document.getElementById("year");
+let month_day = document.getElementById("month-day");
+let uptime_el = document.getElementById("uptime")
+let uptime = new Date();
+let battery_el = document.getElementById("battery");
+function updateData(){
+  const now = new Date();
+  hours.innerText = (now.getHours() < 10 ? "0" : "") + now.getHours();;
+  minutes.innerText = (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
+  seconds.innerText = (now.getSeconds() < 10 ? "0" : "") + now.getSeconds();
+  year.innerText = now.getFullYear();
+  month_day.innerText = getFormattedDate(now);
+  uptime_el.innerText = `${Math.round(((now-uptime)/1000)/86400)}d`;// ${Math.round(((now-uptime)/1000)/60)}m`;
+  getBatteryLevel();
+}
+
+function getFormattedDate(now) {
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  
+  const month = months[now.getMonth()];
+  const day = now.getDate();
+
+
+  return `${month} ${day}`;
+}
+
+function getUptime(old_date, new_date){
+  let uptime_days = Math.round(((old_date-new_date)/1000)/86400);
+}
+
+function getOS() {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+  if (/windows phone/i.test(userAgent)) {
+    return "Windows Phone";
+  }
+  if (/win/i.test(userAgent)) {
+    return "Windows";
+  }
+  if (/android/i.test(userAgent)) {
+    return "Android";
+  }
+  if (/linux/i.test(userAgent)) {
+    return "Linux";
+  }
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    return "iOS";
+  }
+  if (/mac/i.test(userAgent)) {
+    return "MacOS";
+  }
+  return "Unknown";
+}
+
+function getBatteryLevel(){
+  if ('getBattery' in navigator) {
+    navigator.getBattery().then(battery => {
+      battery_el.innerText = (battery.level * 100).toFixed(0) + "%";
+    }).catch(err => {
+      battery_el.innerText = "0" + "%";
+    });
+  } else {
+    battery_el.innerText = "0" + "%";
+  }
+  battery_el.innerText = "0" + "%";
+}
+
+updateData();
+document.getElementById("os").innerText = getOS();
+setInterval(updateData, 1000);
 
 start();
 

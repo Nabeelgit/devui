@@ -6,7 +6,7 @@
     <title>Dev-UI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
@@ -17,13 +17,51 @@
     </div>
     <div class="dashboard" style="display: none;">
         <div class="top">
-            <div class="left-box"></div>
+            <div class="left-box">
+                <div id="left-box-top">
+                    <span>PANEL</span>
+                    <span>SYSTEM</span>
+                </div>
+                <div id="time">
+                    <span id="hours"></span>
+                    <span>:</span>
+                    <span id="minutes"></span>
+                    <span>:</span>
+                    <span id="seconds"></span>
+                </div>
+                <div id="basics">
+                    <div>
+                        <span id="year" class="grayed"></span>
+                        <span id="month-day"></span>
+                    </div>
+                    <div>
+                        <span class="grayed">UPTIME</span>
+                        <span id="uptime"></span>
+                    </div>
+                    <div>
+                        <span class="grayed">TYPE</span>
+                        <span id="os"></span>
+                    </div>
+                    <div>
+                        <span class="grayed">POWER</span>
+                        <span id="battery"></span>
+                    </div>
+                </div>
+            </div>
             <div class="middle-box"></div>
             <div class="right-box"></div>
         </div>
         <div class="bottom">
             <div class="bottom-left"></div>
-            <div class="bottom-right"></div>
+            <div class="bottom-right">
+                <div class="row-1">
+                    <!-- <span>ESC</span> -->
+                </div>
+                <div class="row-2"></div>
+                <div class="row-3"></div>
+                <div class="row-4"></div>
+                <div class="row-5"></div>
+            </div>
         </div>
     </div>
 </body>

@@ -1,9 +1,16 @@
+@font-face {
+  font-family: 'United Sans';
+  src: url('fonts/United Sans Reg Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
     background-color: black;
     color: white;
     padding: 0;
     margin: 0;
-    font-family: "Ubuntu Mono", monospace;
+    font-family: 'United Sans';
     overflow: hidden;
 }
 .loading-text {
@@ -13,6 +20,7 @@ body {
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-end;
+    font-family: "Ubuntu Mono", monospace;
 }
 .middle-logo {
   display: none;
@@ -20,11 +28,10 @@ body {
   justify-content: center;
   height: 80vh;
   font-size: 7rem;
-  font-family: "Kanit", sans-serif;
 }
 .middle-logo .main-span {
   cursor: text;
-  padding: 0.5rem 3rem;
+  padding: 1rem 3rem 0.5rem 3rem;
   border-bottom: 1px solid white;
 }
 
@@ -64,7 +71,7 @@ body {
   width: 60vw;
   border: 1px solid white;
   border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+  border-bottom-right-radius: 0.3rem;
 }
 
 .dashboard .bottom {
@@ -76,7 +83,38 @@ body {
   width: 50vw;
 }
 
-.dashboard .bottom .bottom-right {
-  border: none;
+.left-box {
+  padding: 0.5rem;
 }
 
+#left-box-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid white;
+}
+#time {
+  text-align: center;
+  font-size: 3rem;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+#time span {
+  margin-right: 0.2rem;
+  margin-left: 0.2rem;
+}
+#basics {
+  padding-top: 0.5rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+#basics div{
+  display: flex;
+  flex-direction: column;
+}
+.grayed {
+  opacity: 50%;
+}
