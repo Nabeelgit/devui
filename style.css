@@ -28,7 +28,6 @@ body {
   border-bottom: 1px solid white;
 }
 
-
 .glitch::before {
   content: attr(data-text);
   position: absolute;
@@ -45,3 +44,39 @@ body {
   color: #8a8a8a;
   transform: translate(1px, 1px);
 }
+
+.dashboard {
+  display: block;
+  height: 100vh;
+  width: 100vw;
+}
+
+.dashboard .top {
+  display: flex;
+  height: 70vh;
+}
+
+.dashboard .top .left-box,  .dashboard .top .right-box{
+  width: 20vw;
+}
+
+.dashboard .top .middle-box {
+  width: 60vw;
+  border: 1px solid white;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.dashboard .bottom {
+  display: flex;
+  height: 30vh;
+}
+
+.dashboard .bottom div {
+  width: 50vw;
+}
+
+.dashboard .bottom .bottom-right {
+  border: none;
+}
+

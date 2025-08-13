@@ -71,6 +71,7 @@ function sleep(ms) {
 let loadingText = document.querySelector(".loading-text");
 let middleLogo = document.querySelector(".middle-logo");
 let middleLogoSpan = document.querySelector(".middle-logo .main-span");
+let dash = document.querySelector(".dashboard");
 
 async function start(){
   // fake boot messages
@@ -115,8 +116,48 @@ async function start(){
     await sleep(500);
     middleLogoSpan.style.border = "1px solid white";
     await sleep(500);
-    middleLogo.style.display = "none"
+    document.querySelector(".middle-logo .main-span span").style.opacity = "0";
+    await sleep (500);
+    document.body.style.cursor = "default";
+    let currentWidth = 22;
+    middleLogoSpan.style.width = currentWidth + "vw";
+    while (currentWidth < 55){
+      currentWidth += 0.1;
+      middleLogoSpan.style.width = currentWidth + "vw";
+      await sleep(1);
+    }
+    let currentHeight = getNumFromString(getComputedStyle(middleLogoSpan).height);
+    middleLogoSpan.style.height = getComputedStyle(middleLogoSpan).height;
+    while (currentHeight < 650){
+      currentHeight += 1;
+      middleLogoSpan.style.height = currentHeight + "px";
+      await sleep(1);
+    }
+    await sleep(100);
+    middleLogoSpan.style.position = "absolute";
+    let currentTop = getNumFromString(getComputedStyle(middleLogoSpan).top);
+    while (currentTop > 0){
+      currentTop--;
+      middleLogoSpan.style.top = currentTop + "px";
+      console.log(currentTop)
+      await sleep(10);
+    }
+    middleLogo.style.display = "none";
+    dash.style.display = "block";
+}
+
+function getNumFromString(str){
+  let num = "";
+  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  for(let i = 0; i < str.length; i++){
+    if(!numbers.includes(str[i])){
+      break;
+    }
+    num += str[i];
+  }
+  return parseInt(num);
 }
 
 start();
+
 
