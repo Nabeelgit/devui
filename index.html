@@ -39,7 +39,7 @@
                     <span>:</span>
                     <span id="seconds"></span>
                 </div>
-                <div class="basics" style="border-bottom: 1px white solid;">
+                <div class="basics">
                     <div>
                         <span id="year" class="grayed"></span>
                         <span id="month-day"></span>
@@ -69,6 +69,71 @@
                     <div>
                         <span>CHASSIS</span>
                         <span id="chassis" class="grayed">N/A</span>
+                    </div>
+                </div>
+                <div class="cpu">
+                    <div class="cpu-top">
+                        <span>CPU USAGE</span>
+                        <span class="grayed">CPU N/A</span>
+                    </div>
+                    <div class="cpu-graph">
+                        <div class="cpu-top-graph" style="margin-bottom: 1rem;">
+                            <div class="cpu-graph-text flex-column">
+                                <span># 1 - 2</span>
+                                <span class="grayed">Avg. N/A%</span>
+                            </div>
+                            <canvas id="fakeGraph" width="250" height="50"></canvas>
+                        </div>
+                        <div class="cpu-bottom-graph">
+                            <div class="cpu-graph-text flex-column">
+                                <span># 3 - 4</span>
+                                <span class="grayed">Avg. N/A%</span>
+                            </div>
+                            <canvas id="fakeGraph" width="250" height="50"></canvas>
+                        </div>
+                    </div>
+                    <div class="cpu-details">
+                        <div>
+                            <span>TEMP</span>
+                            <span class="grayed">N/A&deg;C</span>
+                        </div>
+                        <div>
+                            <span>MIN</span>
+                            <span class="grayed">N/AGhz</span>
+                        </div>
+                        <div>
+                            <span>MAX</span>
+                            <span class="grayed">N/AGhz</span>
+                        </div>
+                        <div>
+                            <span>TASKS</span>
+                            <span class="grayed">N/A</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="memory">
+                    <div class="memory-top">
+                        <span>MEMORY</span>
+                        <span class="grayed">USING N/A OUT OF N/A GIB</span>
+                    </div>
+                    <div class="dot-grid">
+                        <div class="fake-memory-dots">
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                            <div class="fake_dot_col"></div>
+                        </div>
+                    </div>
+                    <div class="memory-bottom" style="margin-top: 0.5rem;">
+                        <span>SWAP</span>
+                        <span class="grayed">N/A GIB</span>
                     </div>
                 </div>
             </div>

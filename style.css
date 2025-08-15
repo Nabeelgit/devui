@@ -32,7 +32,7 @@ body {
 }
 .middle-logo .main-span {
   cursor: text;
-  padding: 1rem 3rem 0.5rem 3rem;
+  padding: 1.5rem 3rem 0.5rem 3rem;
   border-bottom: 1px solid white;
 }
 
@@ -74,8 +74,7 @@ span {
 .dashboard .top .middle-box {
   width: 60vw;
   border: 1px solid white;
-  border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 0.3rem;
+  border-radius: 0.2rem;
   background-color: black;
 }
 
@@ -134,8 +133,9 @@ span {
   padding: 0.5rem 0;
   display: flex;
   justify-content: space-around;
+  border-bottom: 1px white solid;
 }
-.basics div{
+.basics div, .cpu-details div{
   display: flex;
   flex-direction: column;
 }
@@ -146,8 +146,6 @@ span {
   position: relative;
   padding: 0.5em 1em;
 }
-
-
 .end-lines::before, .end-lines::after {
     content: "";
     position: absolute;
@@ -156,12 +154,65 @@ span {
     bottom: -8px;
     background: white;
 }
-
-
 .end-lines::before {
   left: 0;
 }
-
 .end-lines::after {
   right: 0;
+}
+.cpu {
+  border-bottom: 1px solid;
+  padding-bottom: 1rem;
+}
+.cpu-top, .memory-top, .memory-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+.cpu-graph {
+  margin-top: 0.7rem;
+  padding: 0 1rem 0.5rem 1rem;
+  border-bottom: 1px dotted white;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.cpu-top-graph, .cpu-bottom-graph {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#fakeGraph {
+  border-top: 1px dotted;
+  border-bottom: 1px dotted;
+}
+.cpu-details {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 1rem;
+}
+.dot-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fake-memory-dots {
+  display: flex;
+  flex-direction: column;
+}
+.fake-memory-dots span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fake_dot_col {
+  display: flex;
+  justify-content: space-evenly;
+  width: 23rem;
+  font-size: smaller;
+  height: 0.56rem;
+}
+.memory {
+  border-bottom: 1px solid white;
 }

@@ -121,28 +121,35 @@ async function start(){
     document.body.style.cursor = "default";
     let currentWidth = 22;
     middleLogoSpan.style.width = currentWidth + "vw";
-    while (currentWidth < 55){
+    while (currentWidth < 52){
       currentWidth += 0.1;
       middleLogoSpan.style.width = currentWidth + "vw";
       await sleep(1);
     }
     let currentHeight = getNumFromString(getComputedStyle(middleLogoSpan).height);
     middleLogoSpan.style.height = getComputedStyle(middleLogoSpan).height;
-    while (currentHeight < 610){
+    while (currentHeight < 600){
       currentHeight += 1;
       middleLogoSpan.style.height = currentHeight + "px";
       await sleep(1);
     }
     await sleep(100);
-    middleLogoSpan.style.position = "absolute";
-    let currentTop = getNumFromString(getComputedStyle(middleLogoSpan).top);
-    while (currentTop > 0){
-      currentTop--;
-      middleLogoSpan.style.top = currentTop + "px";
+    let middle_logo_opacity = 100;
+    while (middle_logo_opacity > 0){
+      middle_logo_opacity--;
+      middleLogo.style.opacity = middle_logo_opacity + "%";
+      await sleep(1);
+    }
+    await sleep(100);
+    middleLogo.style.display = "none";
+    dash.style.opacity = "0";
+    let dash_opacity = 0;
+    dash.style.display = "block";
+    while (dash_opacity < 100){
+      dash_opacity++;
+      dash.style.opacity = dash_opacity + "%";
       await sleep(10);
     }
-    middleLogo.style.display = "none";
-    dash.style.display = "block";
     document.body.style.backgroundImage = "radial-gradient(rgba(255, 255, 255, 0.135) 1px, transparent 1px)";
 }
 
@@ -166,6 +173,16 @@ let month_day = document.getElementById("month-day");
 let uptime_el = document.getElementById("uptime")
 let uptime = new Date();
 let battery_el = document.getElementById("battery");
+let fake_memory_dots_cols = document.querySelectorAll(".fake_dot_col");
+let all_dots = [];
+fake_memory_dots_cols.forEach(one_div => {
+  for(let i = 0; i < 40; i++){
+    let fake_dot_span = document.createElement("span");
+    fake_dot_span.innerText = ".";
+    one_div.appendChild(fake_dot_span);
+    all_dots.push(fake_dot_span);
+  }
+});
 function updateData(){
   const now = new Date();
   hours.innerText = (now.getHours() < 10 ? "0" : "") + now.getHours();;
@@ -175,6 +192,39 @@ function updateData(){
   month_day.innerText = getFormattedDate(now);
   uptime_el.innerText = `${Math.round(((now-uptime)/1000)/86400)}d`;// ${Math.round(((now-uptime)/1000)/60)}m`;
   getBatteryLevel();
+}
+const canvases = document.querySelectorAll('#fakeGraph');
+function updateFakeData(){
+  canvases.forEach(canvas => {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const width = canvas.width;
+    const height = canvas.height;
+    const points = 50;
+
+    const data = [];
+    for (let i = 0; i < points; i++) {
+      data.push(Math.random() * height);
+    }
+
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, data[0]);
+    for (let i = 1; i < data.length; i++) {
+      const x = (i / (points - 1)) * width;
+      const prevX = ((i - 1) / (points - 1)) * width;
+      const prevY = data[i - 1];
+      const currY = data[i];
+      const midX = (prevX + x) / 2;
+      const midY = (prevY + currY) / 2;
+      ctx.quadraticCurveTo(prevX, prevY, midX, midY);
+    }
+    ctx.stroke();
+  });
+  all_dots.forEach(one_dot => {
+    one_dot.style.opacity = (Math.floor(Math.random() * (100 - 1) + 1) > 50 ? 50 : 100) + "%";
+  });
 }
 
 function getFormattedDate(now) {
@@ -190,6 +240,11 @@ function getFormattedDate(now) {
   return `${month} ${day}`;
 }
 
+/*
+
+TODO
+
+*/
 function getUptime(old_date, new_date){
   let uptime_days = Math.round(((old_date-new_date)/1000)/86400);
 }
@@ -230,6 +285,9 @@ function getBatteryLevel(){
 updateData();
 document.getElementById("os").innerText = getOS();
 setInterval(updateData, 1000);
+updateFakeData();
+setInterval(updateFakeData, 2000);
+
 
 start();
 
