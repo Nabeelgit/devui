@@ -12,6 +12,7 @@ body {
     margin: 0;
     font-family: 'United Sans';
     overflow: hidden;
+    background-size: 20px 20px;
 }
 .loading-text {
     display: flex;
@@ -43,6 +44,9 @@ body {
   transform: translate(-2px, -1px);
 }
 
+span {
+  cursor: text;
+}
 
 .glitch::after {
   content: attr(data-text);
@@ -72,6 +76,7 @@ body {
   border: 1px solid white;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 0.3rem;
+  background-color: black;
 }
 
 .dashboard .bottom {
@@ -87,13 +92,32 @@ body {
   padding: 0.5rem;
 }
 
-#left-box-top {
+.top-nav {
+  display: flex;
+  width: 100vw;
+}
+
+.top_nav_item {
   display: flex;
   justify-content: space-between;
   font-size: 0.7rem;
   margin-bottom: 1rem;
   border-bottom: 1px solid white;
 }
+
+#left-box-top {
+  width: 19vw;
+  margin-right: 0.7rem;
+}
+#middle-box-top {
+  width: 58vw;
+}
+
+#right-box-top {
+  width: 18vw;
+  margin-left: 1rem;
+}
+
 #time {
   text-align: center;
   font-size: 3rem;
@@ -106,15 +130,38 @@ body {
   margin-right: 0.2rem;
   margin-left: 0.2rem;
 }
-#basics {
-  padding-top: 0.5rem;
+.basics {
+  padding: 0.5rem 0;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
-#basics div{
+.basics div{
   display: flex;
   flex-direction: column;
 }
 .grayed {
   opacity: 50%;
+}
+.end-lines {
+  position: relative;
+  padding: 0.5em 1em;
+}
+
+
+.end-lines::before, .end-lines::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    top: 15px;
+    bottom: -8px;
+    background: white;
+}
+
+
+.end-lines::before {
+  left: 0;
+}
+
+.end-lines::after {
+  right: 0;
 }

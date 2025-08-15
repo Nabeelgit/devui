@@ -16,12 +16,22 @@
         <span class="main-span"><span>eDev-UI</span></span>
     </div>
     <div class="dashboard" style="display: none;">
+        <div class="top-nav">
+            <div id="left-box-top" class="end-lines top_nav_item">
+                <span>PANEL</span>
+                <span>SYSTEM</span>
+            </div>
+            <div id="middle-box-top" class="end-lines top_nav_item">
+                <span>TERMINAL</span>
+                <span>MAIN SHELL</span>
+            </div>
+            <div id="right-box-top" class="end-lines top_nav_item">
+                <span>PANEL</span>
+                <span>NETWORK</span>
+            </div>
+        </div>
         <div class="top">
             <div class="left-box">
-                <div id="left-box-top">
-                    <span>PANEL</span>
-                    <span>SYSTEM</span>
-                </div>
                 <div id="time">
                     <span id="hours"></span>
                     <span>:</span>
@@ -29,7 +39,7 @@
                     <span>:</span>
                     <span id="seconds"></span>
                 </div>
-                <div id="basics">
+                <div class="basics" style="border-bottom: 1px white solid;">
                     <div>
                         <span id="year" class="grayed"></span>
                         <span id="month-day"></span>
@@ -45,6 +55,20 @@
                     <div>
                         <span class="grayed">POWER</span>
                         <span id="battery"></span>
+                    </div>
+                </div>
+                <div class="basics" style="justify-content: flex-start; padding-left: 1rem;">
+                    <div style="margin-right: 1rem;">
+                        <span>MANAFACTURER</span>
+                        <span id="manafacturer" class="grayed">N/A</span>
+                    </div>
+                    <div style="margin-right: 1rem;">
+                        <span>MODEL</span>
+                        <span id="model" class="grayed">N/A</span>
+                    </div>
+                    <div>
+                        <span>CHASSIS</span>
+                        <span id="chassis" class="grayed">N/A</span>
                     </div>
                 </div>
             </div>

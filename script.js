@@ -143,6 +143,7 @@ async function start(){
     }
     middleLogo.style.display = "none";
     dash.style.display = "block";
+    document.body.style.backgroundImage = "radial-gradient(rgba(255, 255, 255, 0.135) 1px, transparent 1px)";
 }
 
 function getNumFromString(str){
@@ -221,13 +222,9 @@ function getBatteryLevel(){
   if ('getBattery' in navigator) {
     navigator.getBattery().then(battery => {
       battery_el.innerText = (battery.level * 100).toFixed(0) + "%";
-    }).catch(err => {
-      battery_el.innerText = "0" + "%";
-    });
-  } else {
-    battery_el.innerText = "0" + "%";
+    })
   }
-  battery_el.innerText = "0" + "%";
+  battery_el.innerText = "0%";
 }
 
 updateData();
