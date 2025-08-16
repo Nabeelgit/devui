@@ -73,7 +73,7 @@ let finish_animations = false;
 let loadingText = document.querySelector(".loading-text");
 let middleLogo = document.querySelector(".middle-logo");
 let middleLogoSpan = document.querySelector(".middle-logo .main-span");
-let middleLogoSpanText = middleLogoSpan.querySelector("span");
+let middleLogoSpanText = document.querySelector(".middle-logo .main-span span");
 let dash = document.querySelector(".dashboard");
 
 async function start(){
@@ -153,7 +153,6 @@ async function start(){
         dash.style.opacity = dash_opacity + "%";
         await sleep(10);
       }
-      document.body.style.backgroundImage = "radial-gradient(rgba(255, 255, 255, 0.135) 1px, transparent 1px)";
     }
 }
 
@@ -187,6 +186,9 @@ fake_memory_dots_cols.forEach(one_div => {
     all_dots.push(fake_dot_span);
   }
 });
+let user_online_state = document.getElementById("user-online-state");
+let user_ping = document.getElementById("user-ping");
+let ping_update = 4;
 function updateData(){
   const now = new Date();
   hours.innerText = (now.getHours() < 10 ? "0" : "") + now.getHours();;
@@ -196,6 +198,15 @@ function updateData(){
   month_day.innerText = getFormattedDate(now);
   uptime_el.innerText = `${Math.round(((now-uptime)/1000)/86400)}d`;// ${Math.round(((now-uptime)/1000)/60)}m`;
   getBatteryLevel();
+  user_online_state.innerText = navigator.onLine ? "ONLINE" : "OFFLINE";
+  ping_update++;
+  if(ping_update > 3){
+    getPing().then(ping => {
+      user_ping.innerText = ping + "ms";
+    });
+    ping_update = 0;
+  }
+
 }
 const canvases = document.querySelectorAll('#fakeGraph');
 function updateFakeData(){
@@ -286,6 +297,54 @@ function getBatteryLevel(){
   battery_el.innerText = "0%";
 }
 
+async function getIPAndType() {
+  try {
+    let res = await fetch("https://api64.ipify.org?format=json"); 
+    let data = await res.json();
+    let ip = data.ip;
+
+    let type = ip.includes(":") ? "IPv6" : "IPv4";
+
+    return { ip, type };
+  } catch (err) {
+    return { ip: "IPv?", type: "N/A" };
+  }
+}
+getIPAndType().then(result => {
+  document.getElementById("user-ip").innerText = result.ip;
+  document.getElementById("user-ip-type").innerText = result.type
+});
+
+async function getPing(url = "https://api64.ipify.org?format=json") {
+  let start = performance.now();
+
+  try {
+    await fetch(url, { cache: "no-store" }); 
+    let end = performance.now();
+    return Math.round(end - start); // ms
+  } catch (err) {
+    return "N/A";
+  }
+}
+
+let user_lat = "N/A";
+let user_lon = "N/A";
+let lat_long_el = document.getElementById("lat-lon");
+
+function getUserLocation() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        user_lat = position.coords.latitude;
+        user_lon = position.coords.longitude;
+        lat_long_el.innerText = `${user_lat}, ${user_lon}`;
+      },
+    );
+  }
+}
+getUserLocation();
+
+
 document.addEventListener("keydown", function(e){
   if(e.shiftKey && e.key.toLowerCase() == "t" && !finish_animations){
     loadingText.remove();
@@ -304,5 +363,3 @@ setInterval(updateFakeData, 2000);
 
 
 start();
-
-
