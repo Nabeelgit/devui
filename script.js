@@ -68,6 +68,8 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+let finish_animations = false;
+
 let loadingText = document.querySelector(".loading-text");
 let middleLogo = document.querySelector(".middle-logo");
 let middleLogoSpan = document.querySelector(".middle-logo .main-span");
@@ -139,17 +141,20 @@ async function start(){
       middleLogo.style.opacity = middle_logo_opacity + "%";
       await sleep(1);
     }
-    await sleep(100);
-    middleLogo.style.display = "none";
-    dash.style.opacity = "0";
-    let dash_opacity = 0;
-    dash.style.display = "block";
-    while (dash_opacity < 100){
-      dash_opacity += 0.5;
-      dash.style.opacity = dash_opacity + "%";
-      await sleep(10);
+    if(!finish_animations) {
+      finish_animations = true;
+      await sleep(100);
+      middleLogo.style.display = "none";
+      dash.style.opacity = "0";
+      let dash_opacity = 0;
+      dash.style.display = "block";
+      while (dash_opacity < 100){
+        dash_opacity += 0.5;
+        dash.style.opacity = dash_opacity + "%";
+        await sleep(10);
+      }
+      document.body.style.backgroundImage = "radial-gradient(rgba(255, 255, 255, 0.135) 1px, transparent 1px)";
     }
-    document.body.style.backgroundImage = "radial-gradient(rgba(255, 255, 255, 0.135) 1px, transparent 1px)";
 }
 
 function getNumFromString(str){
@@ -282,11 +287,12 @@ function getBatteryLevel(){
 }
 
 document.addEventListener("keydown", function(e){
-  if(e.shiftKey && e.key.toLowerCase() == "t"){
+  if(e.shiftKey && e.key.toLowerCase() == "t" && !finish_animations){
     loadingText.remove();
     middleLogo.remove();
     dash.style.display = "block";
     document.body.style.cursor = "default";
+    finish_animations = true;
   }
 });
 
