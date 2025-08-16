@@ -36,25 +36,10 @@ body {
   border-bottom: 1px solid white;
 }
 
-.glitch::before {
-  content: attr(data-text);
-  position: absolute;
-  clip-path: inset(0 0 50% 0);
-  color: white;
-  transform: translate(-2px, -1px);
-}
-
 span {
   cursor: text;
 }
 
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  clip-path: inset(50% 0 0 0);
-  color: #8a8a8a;
-  transform: translate(1px, 1px);
-}
 
 .dashboard {
   display: block;
@@ -73,6 +58,7 @@ span {
 
 .dashboard .top .middle-box {
   width: 60vw;
+  height: 65.5vh;
   border: 1px solid white;
   border-radius: 0.2rem;
   background-color: black;

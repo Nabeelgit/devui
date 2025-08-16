@@ -71,6 +71,7 @@ function sleep(ms) {
 let loadingText = document.querySelector(".loading-text");
 let middleLogo = document.querySelector(".middle-logo");
 let middleLogoSpan = document.querySelector(".middle-logo .main-span");
+let middleLogoSpanText = middleLogoSpan.querySelector("span");
 let dash = document.querySelector(".dashboard");
 
 async function start(){
@@ -101,34 +102,32 @@ async function start(){
     await sleep(500);
     middleLogoSpan.style.backgroundColor = "black";
     await sleep(500);
-    middleLogoSpan.style.border = "none";
-    await sleep(100);
-    middleLogo.classList.add("glitch");
+    middleLogoSpanText.style.opacity = "0";
     await sleep(500);
     for(let i = 0; i < 5; i++){
-      if(!middleLogo.classList.contains("glitch")){
-        middleLogo.classList.add("glitch");
-      } else {
-        middleLogo.classList.remove("glitch"); 
-      }
+      middleLogoSpanText.style.opacity = middleLogoSpanText.style.opacity == "0" ? "100" : "0";
       await sleep(100);
     }
+    middleLogoSpanText.style.opacity = "100";
     await sleep(500);
-    middleLogoSpan.style.border = "1px solid white";
-    await sleep(500);
-    document.querySelector(".middle-logo .main-span span").style.opacity = "0";
+    let texts_opacity = 100;
+    while (texts_opacity > 0) {
+      texts_opacity--;
+      middleLogoSpanText.style.opacity = texts_opacity + "%";
+      await sleep(10);
+    }
     await sleep (500);
     document.body.style.cursor = "default";
     let currentWidth = 22;
     middleLogoSpan.style.width = currentWidth + "vw";
-    while (currentWidth < 52){
+    while (currentWidth < 50){
       currentWidth += 0.1;
       middleLogoSpan.style.width = currentWidth + "vw";
       await sleep(1);
     }
     let currentHeight = getNumFromString(getComputedStyle(middleLogoSpan).height);
     middleLogoSpan.style.height = getComputedStyle(middleLogoSpan).height;
-    while (currentHeight < 600){
+    while (currentHeight < 550){
       currentHeight += 1;
       middleLogoSpan.style.height = currentHeight + "px";
       await sleep(1);
@@ -146,7 +145,7 @@ async function start(){
     let dash_opacity = 0;
     dash.style.display = "block";
     while (dash_opacity < 100){
-      dash_opacity++;
+      dash_opacity += 0.5;
       dash.style.opacity = dash_opacity + "%";
       await sleep(10);
     }
@@ -281,6 +280,15 @@ function getBatteryLevel(){
   }
   battery_el.innerText = "0%";
 }
+
+document.addEventListener("keydown", function(e){
+  if(e.shiftKey && e.key.toLowerCase() == "t"){
+    loadingText.remove();
+    middleLogo.remove();
+    dash.style.display = "block";
+    document.body.style.cursor = "default";
+  }
+});
 
 updateData();
 document.getElementById("os").innerText = getOS();
