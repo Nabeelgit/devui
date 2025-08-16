@@ -187,100 +187,98 @@
         </div>
     </div>
     <script>
-document.addEventListener("DOMContentLoaded", function(){
-    const container = document.getElementById("earth-container");
-    const earth_width = 400;
-    const earth_height = 450;
+        document.addEventListener("DOMContentLoaded", function(){
+            const container = document.getElementById("earth-container");
+            const earth_width = 400;
+            const earth_height = 450;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(70, earth_width/earth_height, 0.1, 1000);
-    camera.position.z = 3;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(70, earth_width/earth_height, 0.1, 1000);
+            camera.position.z = 3;
 
-    const renderer = new THREE.WebGLRenderer({antialias: true});
-    renderer.setSize(earth_width, earth_height);
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
+            const renderer = new THREE.WebGLRenderer({antialias: true});
+            renderer.setSize(earth_width, earth_height);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
 
-    const loader = new THREE.TextureLoader();
-    loader.load("./assets/earth.jpg", texture => {
-        const size = 256;
-        const canvas = document.createElement("canvas");
-        canvas.width = canvas.height = size;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(texture.image, 0, 0, size, size);
-        const imgData = ctx.getImageData(0, 0, size, size).data;
+            const loader = new THREE.TextureLoader();
+            loader.load("./assets/earth.jpg", texture => {
+                const size = 256;
+                const canvas = document.createElement("canvas");
+                canvas.width = canvas.height = size;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(texture.image, 0, 0, size, size);
+                const imgData = ctx.getImageData(0, 0, size, size).data;
 
-        // Create a group to hold globe and markers
-        const globeGroup = new THREE.Group();
-        scene.add(globeGroup);
+                // Create a group to hold globe and markers
+                const globeGroup = new THREE.Group();
+                scene.add(globeGroup);
 
-        // Globe points
-        const positions = [];
-        for (let y = 0; y < size; y += 2) {
-            for (let x = 0; x < size; x += 2) {
-                const i = (y * size + x) * 4;
-                const r = imgData[i], g = imgData[i+1], b = imgData[i+2];
-                if (!(b > r && b > g)) {
-                    const lon = (x / size) * Math.PI * 2 - Math.PI; 
-                    const lat = (1 - y / size) * Math.PI - Math.PI / 2;
-                    const radius = 1;
+                // Globe points
+                const positions = [];
+                for (let y = 0; y < size; y += 2) {
+                    for (let x = 0; x < size; x += 2) {
+                        const i = (y * size + x) * 4;
+                        const r = imgData[i], g = imgData[i+1], b = imgData[i+2];
+                        if (!(b > r && b > g)) {
+                            const lon = -((x / size) * Math.PI * 2 - Math.PI);
+                            const lat = (1 - y / size) * Math.PI - Math.PI / 2;
+                            const radius = 1;
 
-                    const px = radius * Math.cos(lat) * Math.cos(lon);
-                    const py = radius * Math.sin(lat);
-                    const pz = radius * Math.cos(lat) * Math.sin(lon);
-                    positions.push(px, py, pz);
+                            const px = radius * Math.cos(lat) * Math.cos(lon);
+                            const py = radius * Math.sin(lat);
+                            const pz = radius * Math.cos(lat) * Math.sin(lon);
+                            positions.push(px, py, pz);
+                        }
+                    }
                 }
-            }
-        }
 
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-        const material = new THREE.PointsMaterial({ color: "white", size: 0.004 });
-        const points = new THREE.Points(geometry, material);
-        globeGroup.add(points);
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+                const material = new THREE.PointsMaterial({ color: "white", size: 0.004 });
+                const points = new THREE.Points(geometry, material);
+                globeGroup.add(points);
 
-        // User location marker
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(position => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
+                // User location marker
+                if ("geolocation" in navigator) {
+                    navigator.geolocation.getCurrentPosition(position => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
 
-                const radius = 1.02; // slightly above globe
-                const phi = (90 - lat) * (Math.PI / 180);
-                const theta = (lon + 180) * (Math.PI / 180);
+                        const radius = 1.02; // slightly above globe
+                        const phi = (90 - lat) * (Math.PI / 180);
+                        const theta = -(lon * (Math.PI / 180));
+                        
+                        const x = radius * Math.sin(phi) * Math.cos(theta);
+                        const y = radius * Math.cos(phi);
+                        const z = radius * Math.sin(phi) * Math.sin(theta);
 
-                const x = radius * Math.sin(phi) * Math.cos(theta);
-                const y = radius * Math.cos(phi);
-                const z = radius * Math.sin(phi) * Math.sin(theta);
+                        const markerGeo = new THREE.SphereGeometry(0.02, 8, 8);
+                        const markerMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+                        const marker = new THREE.Mesh(markerGeo, markerMat);
+                        marker.position.set(x, y, z);
+                        globeGroup.add(marker);
 
-                const markerGeo = new THREE.SphereGeometry(0.02, 8, 8);
-                const markerMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-                const marker = new THREE.Mesh(markerGeo, markerMat);
-                marker.position.set(x, y, z);
-                globeGroup.add(marker);
+                        // Rotate globe so marker is at front
+                        globeGroup.rotation.y = -theta + Math.PI; // front-facing
+                    });
+                }
 
-                // Rotate globe so marker is at front
-                globeGroup.rotation.y = -theta + Math.PI; // front-facing
+                // Animate
+                function animate() {
+                    requestAnimationFrame(animate);
+                    globeGroup.rotation.y += 0.004;
+                    renderer.render(scene, camera);
+                }
+                animate();
             });
-        }
 
-        // Animate
-        function animate() {
-            requestAnimationFrame(animate);
-            globeGroup.rotation.y += 0.004;
-            renderer.render(scene, camera);
-        }
-        animate();
-    });
-
-    window.addEventListener("resize", () => {
-        camera.aspect = earth_width / earth_height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(earth_width, earth_height);
-    });
-});
-
-
+            window.addEventListener("resize", () => {
+                camera.aspect = earth_width / earth_height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(earth_width, earth_height);
+            });
+        });
   </script>
 </body>
 </html>
