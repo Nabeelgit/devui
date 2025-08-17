@@ -370,7 +370,7 @@ document.addEventListener("mousedown", function(e){
   if(e.button == 0){
     if(e.target.classList.contains("clickable-icon")){
       icon = e.target;
-      if(!e.shiftKey){
+      if(!e.ctrlKey){
         clearSelected();
       }
       let parent = icon;

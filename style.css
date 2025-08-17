@@ -240,6 +240,19 @@ span {
 .file-explorer {
   display: flex;
   flex-wrap: wrap;
+  overflow-y: scroll;
+  align-items: flex-start;
+}
+.file-explorer::-webkit-scrollbar {
+  width: 4px;
+}
+.file-explorer::-webkit-scrollbar-track {
+  background: rgba(233, 233, 233, 0.695);
+}
+.file-explorer::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 8px;
+  width: 10px;
 }
 .folder {
   display: flex;
@@ -247,7 +260,7 @@ span {
   justify-content: center;
   align-items: center;
   width: 5rem !important;
-  margin: 0 1rem;
+  margin: 0.5rem 1rem;
 }
 .icon-selected {
   background-color: #4e4e4e;
