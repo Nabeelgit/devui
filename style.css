@@ -233,5 +233,6 @@ span {
   margin-top: -83px;
   height: 24rem;
   border-bottom: 1px solid white;
-  text-align: center;
+  position: relative;
+  z-index: -999;
 }

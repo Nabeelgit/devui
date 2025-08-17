@@ -210,7 +210,6 @@
                 ctx.drawImage(texture.image, 0, 0, size, size);
                 const imgData = ctx.getImageData(0, 0, size, size).data;
 
-                // Create a group to hold globe and markers
                 const globeGroup = new THREE.Group();
                 scene.add(globeGroup);
 
@@ -240,12 +239,12 @@
                 globeGroup.add(points);
 
                 // User location marker
-                if ("geolocation" in navigator) {
+                if ("geolocation" in navigator && navigator.onLine) {
                     navigator.geolocation.getCurrentPosition(position => {
                         const lat = position.coords.latitude;
                         const lon = position.coords.longitude;
 
-                        const radius = 1.02; // slightly above globe
+                        const radius = 1.02;
                         const phi = (90 - lat) * (Math.PI / 180);
                         const theta = -(lon * (Math.PI / 180));
                         
@@ -259,15 +258,16 @@
                         marker.position.set(x, y, z);
                         globeGroup.add(marker);
 
-                        // Rotate globe so marker is at front
-                        globeGroup.rotation.y = -theta + Math.PI; // front-facing
+                        globeGroup.rotation.y = -theta + Math.PI;
                     });
                 }
-
-                // Animate
                 function animate() {
                     requestAnimationFrame(animate);
-                    globeGroup.rotation.y += 0.004;
+                    if(navigator.onLine) {
+                        globeGroup.rotation.y += 0.004;
+                    } else {
+                        container.style.opacity = "50%";
+                    }
                     renderer.render(scene, camera);
                 }
                 animate();
