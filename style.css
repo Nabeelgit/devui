@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'United Sans';
-  src: url('fonts/United Sans Reg Medium.otf') format('opentype');
+  src: url('./assets/fonts/United Sans Reg Medium.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -218,10 +218,10 @@ span {
   padding-bottom: 1rem;
   font-size: 17px;
 }
-.world-location {
+.world-location, .network-graph {
   padding: 0.5rem 1rem 0 1rem;
 }
-.world-location-top {
+.world-location-top, .network-graph-top {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
@@ -235,4 +235,7 @@ span {
   border-bottom: 1px solid white;
   position: relative;
   z-index: -999;
+}
+.flipped {
+  transform: scaleY(-1);
 }

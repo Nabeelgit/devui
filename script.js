@@ -174,7 +174,7 @@ let seconds = document.getElementById("seconds");
 let year = document.getElementById("year");
 let month_day = document.getElementById("month-day");
 let uptime_el = document.getElementById("uptime")
-let uptime = new Date();
+let start_time = new Date();
 let battery_el = document.getElementById("battery");
 let fake_memory_dots_cols = document.querySelectorAll(".fake_dot_col");
 let all_dots = [];
@@ -196,7 +196,7 @@ function updateData(){
   seconds.innerText = (now.getSeconds() < 10 ? "0" : "") + now.getSeconds();
   year.innerText = now.getFullYear();
   month_day.innerText = getFormattedDate(now);
-  uptime_el.innerText = `${Math.round(((now-uptime)/1000)/86400)}d`;// ${Math.round(((now-uptime)/1000)/60)}m`;
+  uptime_el.innerText = getUptime(start_time, new Date());
   getBatteryLevel();
   user_online_state.innerText = navigator.onLine ? "ONLINE" : "OFFLINE";
   ping_update++;
@@ -209,8 +209,22 @@ function updateData(){
 
 }
 const canvases = document.querySelectorAll('#fakeGraph');
+const network_canvas = document.getElementById("fakeGraphNetwork");
+const opposite_canvas = document.getElementById("fakeGraphOpposite");
 function updateFakeData(){
-  canvases.forEach(canvas => {
+  canvases.forEach(drawFakeGraph);
+  all_dots.forEach(one_dot => {
+    one_dot.style.opacity = (Math.floor(Math.random() * (100 - 1) + 1) > 50 ? 50 : 100) + "%";
+  });
+  drawFakeGraph(network_canvas);
+  const ctx1 = network_canvas.getContext("2d");
+  const ctx2 = opposite_canvas.getContext("2d");
+  ctx2.clearRect(0, 0,  opposite_canvas.width,  opposite_canvas.height);
+  ctx1.fillRect(50, 50, 100, 100);
+  ctx2.drawImage(network_canvas, 0, 0);
+}
+
+function drawFakeGraph(canvas){
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const width = canvas.width;
@@ -236,10 +250,6 @@ function updateFakeData(){
       ctx.quadraticCurveTo(prevX, prevY, midX, midY);
     }
     ctx.stroke();
-  });
-  all_dots.forEach(one_dot => {
-    one_dot.style.opacity = (Math.floor(Math.random() * (100 - 1) + 1) > 50 ? 50 : 100) + "%";
-  });
 }
 
 function getFormattedDate(now) {
@@ -262,6 +272,7 @@ TODO
 */
 function getUptime(old_date, new_date){
   let uptime_days = Math.round(((old_date-new_date)/1000)/86400);
+  return `${uptime_days}d`;
 }
 
 function getOS() {
