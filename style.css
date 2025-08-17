@@ -38,8 +38,6 @@ body {
 span {
   cursor: text;
 }
-
-
 .dashboard {
   display: block;
   height: 100vh;
@@ -50,7 +48,7 @@ span {
 
 .dashboard .top {
   display: flex;
-  height: 70vh;
+  height: 67vh;
 }
 
 .dashboard .top .left-box,  .dashboard .top .right-box{
@@ -238,4 +236,22 @@ span {
 }
 .flipped {
   transform: scaleY(-1);
+}
+.file-explorer {
+  display: flex;
+  flex-wrap: wrap;
+}
+.folder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 5rem !important;
+  margin: 0 1rem;
+}
+.icon-selected {
+  background-color: #4e4e4e;
+}
+.folder-icon {
+  filter: invert(1) brightness(2);
 }

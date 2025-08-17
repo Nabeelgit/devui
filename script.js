@@ -366,6 +366,31 @@ document.addEventListener("keydown", function(e){
   }
 });
 
+document.addEventListener("mousedown", function(e){
+  if(e.button == 0){
+    if(e.target.classList.contains("clickable-icon")){
+      icon = e.target;
+      if(!e.shiftKey){
+        clearSelected();
+      }
+      let parent = icon;
+      if(icon.id != "folder_parent"){
+        parent = icon.parentElement;
+      }
+      parent.classList.add("icon-selected")
+    } else {
+      clearSelected();
+    }
+  }
+})
+
+function clearSelected(){
+  let selected_icons = document.querySelectorAll(".icon-selected");
+  selected_icons.forEach(sel => {
+    sel.classList.remove("icon-selected");
+  })
+}
+
 updateData();
 document.getElementById("os").innerText = getOS();
 setInterval(updateData, 1000);
