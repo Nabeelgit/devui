@@ -370,12 +370,34 @@ document.addEventListener("mousedown", function(e){
   if(e.button == 0){
     if(e.target.classList.contains("clickable-icon")){
       icon = e.target;
-      if(!e.ctrlKey){
+      if(!e.ctrlKey && !e.shiftKey){
         clearSelected();
       }
       let parent = icon;
       if(icon.id != "folder_parent"){
         parent = icon.parentElement;
+      }
+      if(e.shiftKey){
+        let all_folders = document.querySelectorAll(".folder");
+        let parent_index = 0;
+        let target_index = 0;
+        for(let j = 0; j < all_folders.length; j++){          
+          if(all_folders[j].classList.contains("icon-selected")){
+            parent_index = j;
+          }
+          if(all_folders[j] == parent){
+            target_index = j;
+          }
+        }
+        if(parent_index < target_index){
+          for(; parent_index < target_index; parent_index++){
+            all_folders[parent_index].classList.add("icon-selected");
+          }
+        } else {
+          for(; parent_index > target_index; parent_index--){
+            all_folders[parent_index].classList.add("icon-selected");
+          }
+        }
       }
       parent.classList.add("icon-selected")
     } else {
