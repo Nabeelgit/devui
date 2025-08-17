@@ -364,7 +364,29 @@ document.addEventListener("keydown", function(e){
     document.body.style.cursor = "default";
     finish_animations = true;
   }
+  displayOnKeyboard(e.key, "gray");
 });
+
+document.addEventListener("keyup", function(e){
+  displayOnKeyboard(e.key, "rgba(0, 0, 0, 0)");
+});
+
+function displayOnKeyboard(key, color){
+  if(key === '"'){
+    let quote_key = document.querySelector(`[supervalue='${key}'`);
+    if(quote_key != null){
+      quote_key.style.backgroundColor = color;
+    }
+  }
+  let typed_el = document.querySelector(`[value="${key.toLowerCase()}"`);
+  if(typed_el != null){
+    typed_el.style.backgroundColor = color;
+  }
+  let shift_typed_el = document.querySelector(`[supervalue="${key}"`);
+  if(shift_typed_el != null){
+    shift_typed_el.style.backgroundColor = color;  
+  }
+}
 
 document.addEventListener("mousedown", function(e){
   if(e.button == 0){
@@ -418,6 +440,5 @@ document.getElementById("os").innerText = getOS();
 setInterval(updateData, 1000);
 updateFakeData();
 setInterval(updateFakeData, 2000);
-
 
 start();

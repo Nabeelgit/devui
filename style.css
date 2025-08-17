@@ -68,8 +68,8 @@ span {
   height: 30vh;
 }
 
-.dashboard .bottom div {
-  width: 50vw;
+.bottom-left, .bottom-right {
+  width: 49vw;
 }
 
 .left-box {
@@ -244,15 +244,13 @@ span {
   align-items: flex-start;
 }
 .file-explorer::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 .file-explorer::-webkit-scrollbar-track {
-  background: rgba(233, 233, 233, 0.695);
+  background: #555;
 }
 .file-explorer::-webkit-scrollbar-thumb {
-  background: #555;
-  border-radius: 8px;
-  width: 10px;
+  background: rgba(233, 233, 233, 0.695);
 }
 .folder {
   display: flex;
@@ -262,9 +260,43 @@ span {
   width: 5rem !important;
   margin: 0.5rem 1rem;
 }
+.folder:hover {
+  cursor: pointer;
+}
 .icon-selected {
   background-color: #4e4e4e;
 }
-.folder-icon {
+.folder-icon, .arrow-icon {
   filter: invert(1) brightness(2);
+}
+.keyboard {
+  display: flex;
+  flex-direction: column;
+}
+.row-1, .row-2, .row-3, .row-4, .row-5 {
+  display: flex;
+}
+.keyboard-key {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 3rem;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+.super-key {
+  display: flex;
+  flex-direction: column;
+}
+.super-left {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding-left: 1.5rem;
+  font-size: 1rem;
+}
+.arrow-icon {
+  width: 2rem;
+  margin: 0 10px;
 }
