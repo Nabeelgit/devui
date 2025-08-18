@@ -355,6 +355,9 @@ function getUserLocation() {
 }
 getUserLocation();
 
+let inp_val = "";
+let inp_area = document.querySelector(".input-area");
+const middle_box = document.querySelector(".middle-box");
 
 document.addEventListener("keydown", function(e){
   if(e.shiftKey && e.key.toLowerCase() == "t" && !finish_animations){
@@ -365,6 +368,21 @@ document.addEventListener("keydown", function(e){
     finish_animations = true;
   }
   displayOnKeyboard(e.key, "gray");
+  if(e.key == "Enter" && e.target.classList.contains("input-box")){
+    if(inp_val !== ""){
+      let paragraph = document.createElement("p");
+      paragraph.innerText = inp_val;
+      middle_box.appendChild(paragraph);
+    }
+    e.target.disabled = "true";
+    let new_clone = inp_area.cloneNode(true);
+    let clone_input_box = new_clone.querySelector(".input-box");
+    clone_input_box.value = "";
+    clone_input_box.disabled = false;
+    middle_box.appendChild(new_clone);
+    clone_input_box.focus();
+    inp_val = "";
+  }
 });
 
 document.addEventListener("keyup", function(e){
@@ -433,6 +451,10 @@ function clearSelected(){
   selected_icons.forEach(sel => {
     sel.classList.remove("icon-selected");
   })
+}
+
+function handleInput(el){
+  inp_val = el.value;
 }
 
 updateData();
